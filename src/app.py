@@ -38,6 +38,17 @@ async def recognize_face(location: str):
                 faces,
                 key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1])
             )
+            embedding = main_face.embedding.astype(np.float32).tolist()
+            personal = await repository.find_by_embedding(embedding)
+            if personal is None:
+                continue
+
+            print({
+                'name': personal.full_name,
+                'location': location,
+                'datetime': str(datetime.now())
+            })
+
             2 берет все лица на камере и ищет их:
             for face in faces:
                 embedding = face.embedding.astype(np.float32).tolist()
