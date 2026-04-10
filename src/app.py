@@ -55,6 +55,12 @@ async def recognize_face(location: str):
                 personal = await repository.find_by_embedding(embedding)
                 if personal is None:
                     continue
+                    
+                print({
+                    'name': personal.full_name,
+                    'location': location,
+                    'datetime': str(datetime.now())
+                })
             """
 
             # Варианты вставлять в этот промежуток
